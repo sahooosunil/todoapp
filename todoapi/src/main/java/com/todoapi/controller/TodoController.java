@@ -15,6 +15,11 @@ public class TodoController {
         this.service = service;
     }
 
+    @GetMapping("/color")
+    public String getColor() {
+        return "red";
+    }
+
     @GetMapping
     public List<Todo> getAllTodos() {
         return service.findAll();
