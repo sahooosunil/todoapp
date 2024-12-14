@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image: 'maven:3.9.5-eclipse-temurin-17'
+            image 'maven:3.9.5-eclipse-temurin-17'
         }
     }
     environment {
@@ -11,7 +11,9 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-            checkout scm
+            steps { // Added steps block
+                checkout scm
+            }
         }
         stage('Maven Build and Test') {
             steps {
