@@ -1,0 +1,42 @@
+pipeline {
+    agent {
+        docker {
+            image: 'maven:3.9.5-eclipse-temurin-17'
+        }
+    }
+    environment {
+        DOCKER_IMAGE = 'sunilsahu0123/todoapi'
+        DOCKER_CREDENTIALS = 'docker-hub-credential'
+        SONARQUBE_ENV = 'SonarQube'
+    }
+    stages {
+        stage('Checkout') {
+            checkout scm
+        }
+        stage('Maven Build and Test') {
+            steps {
+                script {
+                    sh 'mvn clean verify'
+                }
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv(env.SONARQUBE_ENV){
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                script {
+                    timeout(time: 2, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                }
+            }
+        }
+    }
+}
