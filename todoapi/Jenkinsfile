@@ -18,7 +18,7 @@ pipeline {
         stage('Maven Build and Test') {
             steps {
                 script {
-                    sh 'mvn clean verify'
+                    sh 'cd todoapi & mvn clean verify'
                 }
             }
         }
