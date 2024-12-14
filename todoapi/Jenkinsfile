@@ -28,8 +28,8 @@ pipeline {
             steps {
                 script {
                     dir('todoapi') {
-                        withSonarQubeEnv(env.SONARQUBE_ENV){
-                            sh 'mvn sonar:sonar'
+                        withSonarQubeEnv(){
+                            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=todoapp -Dsonar.projectName='todoapp'"
                         }
                     }
                 }
