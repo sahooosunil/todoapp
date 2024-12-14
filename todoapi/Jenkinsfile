@@ -18,15 +18,19 @@ pipeline {
         stage('Maven Build and Test') {
             steps {
                 script {
-                    sh 'cd todoapi & mvn clean verify'
+                    dir('todoapi') {
+                        sh 'mvn clean verify'
+                    }
                 }
             }
         }
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv(env.SONARQUBE_ENV){
-                        sh 'mvn sonar:sonar'
+                    dir('todoapi') {
+                        withSonarQubeEnv(env.SONARQUBE_ENV){
+                            sh 'mvn sonar:sonar'
+                        }
                     }
                 }
             }
