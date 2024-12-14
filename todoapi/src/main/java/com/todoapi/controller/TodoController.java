@@ -17,7 +17,7 @@ public class TodoController {
 
     @GetMapping("/color")
     public String getColor() {
-        return "red";
+        return "yellow";
     }
 
     @GetMapping
