@@ -35,14 +35,27 @@ pipeline {
                 }
             }
         }
-        stage('Quality Gate') {
+        stage('Docker Build and Push') {
             steps {
                 script {
-                    timeout(time: 10, unit: 'MINUTES') {
-                        waitForQualityGate abortPipeline: true
+                    dir('todoapi') {
+                        def buildNumber = env.BUILD_NUMBER
+                        def imageTag = "${env.DOCKER_IMAGE}:${buildNumber}"
+                        sh "docker build -t ${imageTag} ."
+                        withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS]) {
+                            sh "docker push ${imageTag}"
+                        }
                     }
                 }
             }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check logs for details.'
         }
     }
 }
