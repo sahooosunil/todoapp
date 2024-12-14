@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.9.5-eclipse-temurin-17'
+            image 'sunilsahu0123/java-maven-node-docker-agent-image'
             args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
