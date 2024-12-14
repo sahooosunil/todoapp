@@ -29,7 +29,7 @@ pipeline {
                 script {
                     dir('todoapi') {
                         withSonarQubeEnv(){
-                            sh "mvn sonar:sonar"
+                            sh "mvn sonar:sonar -Dsonar.projectKey=todoapp -Dsonar.projectName='todoapp'"
                         }
                     }
                 }
