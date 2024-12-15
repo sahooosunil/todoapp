@@ -10,6 +10,8 @@ RUN npm run build
 
 FROM node:16
 WORKDIR /app
-COPY --from=build /app/build/* ./
+COPY ./package.json .
+COPY ./package-lock.json .
+COPY --from=build /app/build ./build
 EXPOSE 3000
 ENTRYPOINT [ "npm", "start" ]
