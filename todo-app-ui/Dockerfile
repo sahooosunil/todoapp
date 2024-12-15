@@ -12,7 +12,7 @@ FROM node:16
 WORKDIR /app
 COPY ./package.json .
 COPY ./package-lock.json .
-RUN npm install
 COPY --from=build /app/build ./build
+RUN npm install -g serve
 EXPOSE 3000
-ENTRYPOINT [ "npm", "start" ]
+CMD ["serve", "-s", "build", "-l", "3000"]
