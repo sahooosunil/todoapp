@@ -10,7 +10,3 @@ WORKDIR /app
 COPY --from=build ./app/target/todoapi-0.0.1-SNAPSHOT.jar ./todoapi.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "todoapi.jar"]
-
-
-
-ENTRYPOINT ["top", "-b"]
