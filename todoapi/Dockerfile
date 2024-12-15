@@ -5,7 +5,7 @@ COPY ./pom.xml .
 COPY ./src ./src
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:17-jdk-alpine
+FROM arm64v8/openjdk
 WORKDIR /app
 COPY --from=build ./app/target/todoapi-0.0.1-SNAPSHOT.jar ./todoapi.jar
 EXPOSE 8080
