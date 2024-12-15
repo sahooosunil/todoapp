@@ -36,20 +36,20 @@ pipeline {
                 }
             }
         }
-        stage('Docker Build and Push') {
-            steps {
-                script {
-                    dir('todoapi') {
-                        def buildNumber = env.BUILD_NUMBER
-                        def imageTag = "${env.DOCKER_IMAGE}:${buildNumber}"
-                        sh "docker build -t ${imageTag} ."
-                        withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS]) {
-                            sh "docker push ${imageTag}"
-                        }
-                    }
-                }
-            }
-        }
+//         stage('Docker Build and Push') {
+//             steps {
+//                 script {
+//                     dir('todoapi') {
+//                         def buildNumber = env.BUILD_NUMBER
+//                         def imageTag = "${env.DOCKER_IMAGE}:${buildNumber}"
+//                         sh "docker build -t ${imageTag} ."
+//                         withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS]) {
+//                             sh "docker push ${imageTag}"
+//                         }
+//                     }
+//                 }
+//             }
+//         }
     }
     post {
         success {
