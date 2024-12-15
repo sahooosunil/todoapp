@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             agent {
-                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+                docker { image 'maven:3.8.1-adoptopenjdk-17' }
             }
             steps { // Added steps block
                 checkout scm
@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Maven Build and Test') {
             agent {
-                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+                docker { image 'maven:3.8.1-adoptopenjdk-17' }
             }
             steps {
                 script {
@@ -28,7 +28,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             agent {
-                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+                docker { image 'maven:3.8.1-adoptopenjdk-17' }
             }
             steps {
                 script {
