@@ -10,8 +10,6 @@ RUN npm run build
 
 FROM node:16
 WORKDIR /app
-COPY ./package.json .
-COPY ./package-lock.json .
 COPY --from=build /app/build ./build
 RUN npm install -g serve
 EXPOSE 3000
