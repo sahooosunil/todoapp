@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        agent none
-    }
+    agent none
     environment {
         DOCKER_IMAGE = 'sunilsahu0123/todoapi'
         DOCKER_CREDENTIALS = 'docker-hub-credential'
