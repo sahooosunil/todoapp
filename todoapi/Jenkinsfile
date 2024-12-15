@@ -49,20 +49,26 @@ pipeline {
                 }
             }
         }
-//         stage('Docker Build and Push') {
-//             steps {
-//                 script {
-//                     dir('todoapi') {
-//                         def buildNumber = env.BUILD_NUMBER
-//                         def imageTag = "${env.DOCKER_IMAGE}:${buildNumber}"
-//                         sh "docker build -t ${imageTag} ."
-//                         withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS]) {
-//                             sh "docker push ${imageTag}"
-//                         }
-//                     }
-//                 }
-//             }
-//         }
+        stage('Docker Build and Push') {
+            agent {
+                docker {
+                    image 'abhishekf5/maven-abhishek-docker-agent:v1'
+                          args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+                }
+            }
+            steps {
+                script {
+                    dir('todoapi') {
+                        def buildNumber = env.BUILD_NUMBER
+                        def imageTag = "${env.DOCKER_IMAGE}:${buildNumber}"
+                        sh "docker build -t ${imageTag} ."
+                        withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS]) {
+                            sh "docker push ${imageTag}"
+                        }
+                    }
+                }
+            }
+        }
     }
     post {
         success {
