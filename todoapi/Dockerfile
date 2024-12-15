@@ -5,7 +5,7 @@ COPY ./pom.xml .
 COPY ./src ./src
 RUN mvn clean package -DskipTests
 
-FROM arm64v8/openjdk
+FROM openjdk:17
 WORKDIR /app
 COPY --from=build ./app/target/todoapi-0.0.1-SNAPSHOT.jar ./todoapi.jar
 EXPOSE 8080
