@@ -1,9 +1,6 @@
 pipeline {
     agent {
-        docker {
-            image 'abhishekf5/maven-abhishek-docker-agent:v1'
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-         }
+        agent none
     }
     environment {
         DOCKER_IMAGE = 'sunilsahu0123/todoapi'
@@ -17,6 +14,9 @@ pipeline {
             }
         }
         stage('Maven Build and Test') {
+            agent {
+                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+            }
             steps {
                 script {
                     dir('todoapi') {
@@ -26,6 +26,9 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
+            agent {
+                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+            }
             steps {
                 script {
                     dir('todoapi') {
