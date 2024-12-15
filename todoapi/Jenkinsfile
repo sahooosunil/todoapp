@@ -8,7 +8,10 @@ pipeline {
     stages {
         stage('Checkout') {
             agent {
-                docker { image 'maven:3.9.5-eclipse-temurin-17' }
+                docker {
+                    image 'maven:3.9.5-eclipse-temurin-17'
+                    args '-u root'
+                }
             }
             steps { // Added steps block
                 checkout scm
@@ -16,7 +19,10 @@ pipeline {
         }
         stage('Maven Build and Test') {
             agent {
-                docker { image 'maven:3.9.5-eclipse-temurin-17' }
+                docker {
+                    image 'maven:3.9.5-eclipse-temurin-17'
+                    args '-u root'
+                }
             }
             steps {
                 script {
@@ -28,7 +34,10 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             agent {
-                docker { image 'maven:3.9.5-eclipse-temurin-17' }
+                docker {
+                    image 'maven:3.9.5-eclipse-temurin-17'
+                    args '-u root'
+                }
             }
             steps {
                 script {
