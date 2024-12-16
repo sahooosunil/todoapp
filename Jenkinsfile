@@ -2,6 +2,7 @@ pipeline {
     agent none
     environment {
         DOCKER_IMAGE = 'sunilsahu0123/todoapi'
+        DOCKER_IMAGE_UI = 'sunilsahu0123/todoui'
         DOCKER_CREDENTIALS = 'docker-hub-credential'
         SONARQUBE_ENV = 'SonarQube'
     }
@@ -61,6 +62,14 @@ pipeline {
                     dir('todoapi') {
                         def buildNumber = env.BUILD_NUMBER
                         def imageTag = "${env.DOCKER_IMAGE}:${buildNumber}"
+                        sh "docker build -t ${imageTag} ."
+                        withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS]) {
+                            sh "docker push ${imageTag}"
+                        }
+                    }
+                    dir('todo-app-ui') {
+                        def buildNumber = env.BUILD_NUMBER
+                        def imageTag = "${env.DOCKER_IMAGE_UI}:${buildNumber}"
                         sh "docker build -t ${imageTag} ."
                         withDockerRegistry([credentialsId: env.DOCKER_CREDENTIALS]) {
                             sh "docker push ${imageTag}"
