@@ -18,6 +18,7 @@ spec:
       - path: /ui
         pathType: Prefix
         backend:
-          service: todoui
+          service: 
+            name: todoui
           port:
             number: 3000
