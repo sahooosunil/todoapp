@@ -15,3 +15,9 @@ spec:
             name: todoapi
             port:
               number: 8080
+      - path: /ui
+        pathType: Prefix
+        backend:
+          service: todoui
+          port:
+            number: 3000
