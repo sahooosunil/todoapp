@@ -20,5 +20,5 @@ spec:
         backend:
           service: 
             name: todoui
-          port:
-            number: 3000
+            port:
+              number: 3000
