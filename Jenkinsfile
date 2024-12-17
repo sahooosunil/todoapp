@@ -90,8 +90,8 @@ pipeline {
                     dir('k8s') {
                         withCredentials(credentialsId: 'github-token') {
                             sh '''
-                            sed -i "s/\(image:.*:\)[0-9]*/\1${env.BUILD_NUMBER}/" deployment-ui.yml
-                            sed -i "s/\(image:.*:\)[0-9]*/\1${env.BUILD_NUMBER}/" deployment-api.yml
+                            sed -i 's/\(image:.*:\)[0-9]*/\1${env.BUILD_NUMBER}/' deployment-ui.yml
+                            sed -i 's/\(image:.*:\)[0-9]*/\1${env.BUILD_NUMBER}/' deployment-api.yml
                             git add deployment-ui.yml
                             git add deployment-api.yml
                             git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
