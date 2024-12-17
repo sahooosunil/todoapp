@@ -85,7 +85,7 @@ pipeline {
                     args '-u root'
                 }
             }
-            seteps {
+            steps {
                 script {
                     dir('k8s') {
                         withCredentials(credentialsId: 'github-token') {
