@@ -78,6 +78,30 @@ pipeline {
                 }
             }
         }
+        stage('Deployment') {
+            agent {
+                docker {
+                    image 'maven:3.9.5-eclipse-temurin-17'
+                    args '-u root'
+                }
+            }
+            seteps {
+                script {
+                    dir('k8s') {
+                        withCredentials(credentialsId: 'github-token') {
+                            sh '''
+                            sed -i "s/\(image:.*:\)[0-9]*/\1${env.BUILD_NUMBER}/" deployment-ui.yml
+                            sed -i "s/\(image:.*:\)[0-9]*/\1${env.BUILD_NUMBER}/" deployment-api.yml
+                            git add deployment-ui.yml
+                            git add deployment-api.yml
+                            git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
+                            git push https://github.com/sahooosunil/todoapp.git HEAD:main
+                            '''
+                        }
+                    }    
+                }
+            }
+        }
     }
     post {
         success {
