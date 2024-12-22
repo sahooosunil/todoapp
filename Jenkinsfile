@@ -106,7 +106,7 @@ pipeline {
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
                         git remote set-url origin github.com/sahooosunil/todoapp.git
-                        git push
+                        git push --set-upstream origin main
                         '''
                     }  
                 }
