@@ -100,10 +100,13 @@ pipeline {
                         git config --global user.email "$GIT_USER"
                         git config --global user.name "$GIT_USER"
                         git config --global user.password "$GIT_PASS"
+                        git branch main
+                        git checkout main
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
+                        git status
                         git remote set-url origin github.com/sahooosunil/todoapp.git
-                        git push HEAD:main
+                        git push
                         '''
                     }  
                 }
