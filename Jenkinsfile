@@ -92,6 +92,8 @@ pipeline {
                             sh '''
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1${env.BUILD_NUMBER}/' deployment-ui.yml
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1${env.BUILD_NUMBER}/' deployment-api.yml
+                            cat deployment-api.yml
+                            deployment-ui.yml 
                             git config user.name "$GIT_USER"
                             git config user.password "$GIT_PASS"
                             git add deployment-ui.yml
