@@ -9,7 +9,10 @@ pipeline {
     stages {
         stage('Checkout') {
             agent {
-                docker { image 'alpine/git:latest' }
+                docker { 
+                    image 'alpine/git:latest'
+                    args '-u root'
+                 }
             }
             steps { // Added steps block
                 checkout scm
