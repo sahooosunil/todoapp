@@ -89,8 +89,8 @@ pipeline {
                         pwd
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
-                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$env.BUILD_NUMBER\"/' ./k8s/deployment-ui.yml
-                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$env.BUILD_NUMBER\"/' ./k8s/deployment-api.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-ui.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp
