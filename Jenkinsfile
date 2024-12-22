@@ -96,7 +96,8 @@ pipeline {
                             git init
                             git remote add origin https://github.com/sahooosunil/todoapp.git
                             git pull origin main
-                            git config user.name "$GIT_USER"
+                            git config --global user.email "$GIT_USER"
+                            git config --global user.name "$GIT_USER"
                             git config user.password "$GIT_PASS"
                             git add deployment-ui.yml
                             git add deployment-api.yml
