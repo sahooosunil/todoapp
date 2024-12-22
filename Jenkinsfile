@@ -89,15 +89,14 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
-                        git init
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' ./k8s/deployment-ui.yml
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
-                        git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp/k8s
-                        git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp/k8s
+                        git init
+                        git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp
                         git config --global user.email "$GIT_USER"
                         git config --global user.name "$GIT_USER"
                         git config --global user.password "$GIT_PASS"
