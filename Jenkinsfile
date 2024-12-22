@@ -88,7 +88,7 @@ pipeline {
             steps {
                 script {
                     dir('k8s') {
-                        withCredentials([string(credentialsId: 'github-token')]) {
+                        withCredentials([string(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                             sh '''
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1${env.BUILD_NUMBER}/' deployment-ui.yml
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1${env.BUILD_NUMBER}/' deployment-api.yml
