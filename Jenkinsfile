@@ -93,9 +93,6 @@ pipeline {
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' deployment-ui.yml
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' deployment-api.yml
                             git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp/k8s
-                            git init
-                            git remote add origin https://github.com/sahooosunil/todoapp.git
-                            git pull origin main
                             git config --global user.email "$GIT_USER"
                             git config --global user.name "$GIT_USER"
                             git config user.password "$GIT_PASS"
