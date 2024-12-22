@@ -102,8 +102,6 @@ pipeline {
                             sh '''
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' deployment-ui.yml
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' deployment-api.yml
-                            'ls -la'
-                            'git status || echo "Custom message: Not a git repository"'
                             git config user.name "$GIT_USER"
                             git config user.password "$GIT_PASS"
                             git add deployment-ui.yml
