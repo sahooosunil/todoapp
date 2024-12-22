@@ -93,7 +93,6 @@ pipeline {
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
-                        git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp
                         git config user.email "$GIT_USER"
                         git config user.name "$GIT_USER"
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
