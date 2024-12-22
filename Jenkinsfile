@@ -16,6 +16,15 @@ pipeline {
             }
             steps { // Added steps block
                 checkout scm
+                script {
+                    dir('k8s') {
+                        if (!fileExists('.git')) {
+                            sh 'git init'
+                            sh 'git remote add origin https://github.com/sahooosunil/todoapp.git'
+                            sh 'git pull origin main'
+                        }
+                    }
+                }
             }
         }
         stage('Maven Build and Test') {
