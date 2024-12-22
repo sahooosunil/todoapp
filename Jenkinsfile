@@ -88,12 +88,14 @@ pipeline {
             steps {
                 script {
                     dir('k8s') {
-                        withCredentials([string(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+                        withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                             sh '''
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1${env.BUILD_NUMBER}/' deployment-ui.yml
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1${env.BUILD_NUMBER}/' deployment-api.yml
                             git add deployment-ui.yml
                             git add deployment-api.yml
+                            git config user.name "$GIT_USER"
+                            git config user.password "$GIT_PASS"
                             git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                             git push https://github.com/sahooosunil/todoapp.git HEAD:main
                             '''
