@@ -96,10 +96,9 @@ pipeline {
                             git config --global user.email "$GIT_USER"
                             git config --global user.name "$GIT_USER"
                             git config user.password "$GIT_PASS"
-                            git add deployment-ui.yml
-                            git add deployment-api.yml
+                            git add deployment-ui.yml deployment-api.yml
                             git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
-                            git push
+                            git push https://${GIT_USER}:${GIT_PASS}@github.com/sahooosunil/todoapp.git HEAD:main
                             '''
                         }
                     }    
