@@ -87,25 +87,23 @@ pipeline {
             }
             steps {
                 script {
-                    dir('k8s') {
-                        withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
-                            sh '''
-                            cat deployment-ui.yml
-                            cat deployment-api.yml
-                            sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' deployment-ui.yml
-                            sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' deployment-api.yml
-                            cat deployment-ui.yml
-                            cat deployment-api.yml
-                            git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp/k8s
-                            git config --global user.email "$GIT_USER"
-                            git config --global user.name "$GIT_USER"
-                            git config user.password "$GIT_PASS"
-                            git add deployment-ui.yml deployment-api.yml
-                            git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
-                            git push https://${GIT_USER}:${GIT_PASS}@github.com/sahooosunil/todoapp.git HEAD:main
-                            '''
-                        }
-                    }    
+                    withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+                        sh '''
+                        cat ./k8s/deployment-ui.yml
+                        cat ./k8s/deployment-api.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' ./k8s/deployment-ui.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' ./k8s/deployment-api.yml
+                        cat ./k8s/deployment-ui.yml
+                        cat ./k8s/deployment-api.yml
+                        git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp/k8s
+                        git config --global user.email "$GIT_USER"
+                        git config --global user.name "$GIT_USER"
+                        git config user.password "$GIT_PASS"
+                        git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
+                        git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
+                        git push https://${GIT_USER}:${GIT_PASS}@github.com/sahooosunil/todoapp.git HEAD:main
+                        '''
+                    }  
                 }
             }
         }
