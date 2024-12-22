@@ -99,7 +99,7 @@ pipeline {
                             git add deployment-ui.yml
                             git add deployment-api.yml
                             git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
-                            git push https://github.com/sahooosunil/todoapp.git HEAD:main
+                            git push
                             '''
                         }
                     }    
