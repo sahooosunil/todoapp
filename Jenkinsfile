@@ -9,10 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             agent {
-                docker {
-                    image 'maven:3.9.5-eclipse-temurin-17'
-                    args '-u root'
-                }
+                docker { image 'alpine/git:latest' }
             }
             steps { // Added steps block
                 checkout scm
@@ -80,33 +77,26 @@ pipeline {
         }
         stage('Deployment') {
             agent {
-                docker {
-                    image 'maven:3.9.5-eclipse-temurin-17'
-                    args '-u root'
-                }
+                docker { image 'alpine:latest' }
             }
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
+                        pwd
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
-                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' ./k8s/deployment-ui.yml
-                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' ./k8s/deployment-api.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$env.BUILD_NUMBER\"/' ./k8s/deployment-ui.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$env.BUILD_NUMBER\"/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
-                        git init
                         git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp
                         git config --global user.email "$GIT_USER"
-                        git config --global user.name "$GIT_USER"
-                        git config --global user.password "$GIT_PASS"
-                        git branch main
-                        git checkout main
+                        git config --global user.name "JENKINS"
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
-                        git remote set-url origin github.com/sahooosunil/todoapp.git
-                        git push --set-upstream origin main
+                        git push
                         '''
                     }  
                 }
