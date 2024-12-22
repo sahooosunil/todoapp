@@ -16,16 +16,6 @@ pipeline {
             }
             steps { // Added steps block
                 checkout scm
-                script {
-                    dir('k8s') {
-                        if (!fileExists('.git')) {
-                            sh 'git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp/k8s'
-                            sh 'git init'
-                            sh 'git remote add origin https://github.com/sahooosunil/todoapp.git'
-                            sh 'git pull origin main'
-                        }
-                    }
-                }
             }
         }
         stage('Maven Build and Test') {
@@ -102,6 +92,10 @@ pipeline {
                             sh '''
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' deployment-ui.yml
                             sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"${env.BUILD_NUMBER}\"/' deployment-api.yml
+                            git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp/k8s
+                            git init
+                            git remote add origin https://github.com/sahooosunil/todoapp.git
+                            git pull origin main
                             git config user.name "$GIT_USER"
                             git config user.password "$GIT_PASS"
                             git add deployment-ui.yml
