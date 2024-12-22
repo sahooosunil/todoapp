@@ -100,7 +100,7 @@ pipeline {
                         git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp/k8s
                         git config --global user.email "$GIT_USER"
                         git config --global user.name "$GIT_USER"
-                        git config user.password "$GIT_PASS"
+                        git config --global user.password "$GIT_PASS"
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git push https://${GIT_USER}:${GIT_PASS}@github.com/sahooosunil/todoapp.git HEAD:main
