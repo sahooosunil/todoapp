@@ -60,6 +60,9 @@ pipeline {
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
+                        pwd
+                        ls -la
+                        whoami
                         git config user.email "$GIT_USER"
                         git config user.name "$GIT_USER"
                         git config user.password "$GIT_PASS"
