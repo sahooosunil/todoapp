@@ -96,8 +96,8 @@ pipeline {
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
-                        git config user.email "$GIT_USER"
-                        git config user.name "$GIT_USER"
+                        git config --global user.email "$GIT_USER"
+                        git config --global user.name "$GIT_USER"
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
