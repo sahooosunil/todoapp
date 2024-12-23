@@ -16,6 +16,7 @@ pipeline {
             }
             steps { // Added steps block
                 checkout scm
+                sh 'git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp'
                 sh 'git checkout main'
             }
         }
