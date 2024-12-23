@@ -14,10 +14,8 @@ pipeline {
                     args '-u root'
                  }
             }
-            steps { // Added steps block
+            steps { 
                 checkout scm
-                sh 'git config --global --add safe.directory /var/lib/jenkins/workspace/todoapp'
-                sh 'git checkout main'
             }
         }
         stage('Maven Build and Test') {
@@ -91,12 +89,9 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
-                        whoami
-                        pwd
-                        ls -la
-                        sudo su - jenkins
-                        cat ./k8s/deployment-ui.yml
-                        cat ./k8s/deployment-api.yml
+                        git clone https://github.com/sahooosunil/todoapp.git
+                        cd todoapp
+                        git checkout main
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-ui.yml
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
