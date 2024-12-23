@@ -103,7 +103,7 @@ pipeline {
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
-                        git push https://$GIT_USER:$https://github.com/sahooosunil/todoapp.git
+                        git push https://$GIT_USER:$GIT_PASS@https://github.com/sahooosunil/todoapp.git
                         '''
                     }  
                 }
