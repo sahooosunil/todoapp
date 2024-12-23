@@ -89,8 +89,8 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
-                        mkdir temp2
-                        cd temp2
+                        mkdir temp3
+                        cd temp3
                         git clone https://github.com/sahooosunil/todoapp.git
                         cd todoapp
                         git checkout main
@@ -100,11 +100,11 @@ pipeline {
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         git config user.email "$GIT_USER"
-                        git config user.name "$GIT_USER"
+                        git config user.name sahooosunil
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
-                        git push https://$GIT_USER:$GIT_PASS@github.com/sahooosunil/todoapp.git
+                        git push https://sahooosunil@github.com/sahooosunil/todoapp.git
                         cd ..
                         rm -r temp2
                         '''
