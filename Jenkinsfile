@@ -92,7 +92,7 @@ pipeline {
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
                         git remote -v
-                        git push
+                        git push https://github.com/sahooosunil/todoapp.git HEAD:main
                         '''
                     }  
                 }
