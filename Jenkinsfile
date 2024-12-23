@@ -5,7 +5,6 @@ pipeline {
         DOCKER_IMAGE_UI = 'sunilsahu0123/todoui'
         DOCKER_CREDENTIALS = 'docker-hub-credential'
         SONARQUBE_ENV = 'SonarQube'
-        DOCKER_VOLUME = '/var/lib/jenkins/workspace'
     }
     stages {
         stage('Checkout') {
@@ -13,11 +12,11 @@ pipeline {
                 docker { 
                     image 'maven:3.9.5-eclipse-temurin-17'
                     args '-u root'
-                    args "-v ${env.DOCKER_VOLUME}:${env.DOCKER_VOLUME}"
                  }
             }
             steps { // Added steps block
                 checkout scm
+                sh 'git checkout main'
             }
         }
         stage('Maven Build and Test') {
@@ -84,7 +83,6 @@ pipeline {
             agent {
                 docker { 
                     image 'maven:3.9.5-eclipse-temurin-17' 
-                    args "-v ${env.DOCKER_VOLUME}:${env.DOCKER_VOLUME}"
                 }
             }
             steps {
