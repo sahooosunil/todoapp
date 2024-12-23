@@ -89,8 +89,8 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
-                        mkdir temp
-                        cd temp
+                        mkdir temp1
+                        cd temp1
                         git clone https://github.com/sahooosunil/todoapp.git
                         cd todoapp
                         git checkout main
@@ -104,6 +104,8 @@ pipeline {
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
                         git push https://$GIT_USER:$GIT_PASS@https://github.com/sahooosunil/todoapp.git
+                        cd ..
+                        rm -r temp1
                         '''
                     }  
                 }
