@@ -21,6 +21,8 @@ pipeline {
             steps {
                 script {
                     dir('todoapi') {
+                        sh 'whoami'
+                        sh 'pwd'
                         sh 'mvn clean verify'
                     }
                 }
