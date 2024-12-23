@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
-             args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-        }
-    }
+    agent none
     environment {
         DOCKER_IMAGE = 'sunilsahu0123/todoapi'
         DOCKER_IMAGE_UI = 'sunilsahu0123/todoui'
@@ -13,11 +8,23 @@ pipeline {
     }
     stages {
         stage('Checkout') {
+            agent {
+                docker {
+                    image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+                }
+            }
             steps { 
                 checkout scm
             }
         }
         stage('Maven Build and Test') {
+            agent {
+                docker {
+                    image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+                }
+            }
             steps {
                 script {
                     dir('todoapi') {
@@ -27,6 +34,12 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
+            agent {
+                docker {
+                    image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+                }
+            }
             steps {
                 script {
                     dir('todoapi') {
@@ -58,6 +71,12 @@ pipeline {
             }
         }
         stage('Deployment') {
+            agent {
+                docker {
+                    image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+                }
+            }
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
