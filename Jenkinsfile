@@ -89,11 +89,12 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
-                        mkdir temp1
-                        cd temp1
+                        mkdir temp2
+                        cd temp2
                         git clone https://github.com/sahooosunil/todoapp.git
                         cd todoapp
                         git checkout main
+                        echo $BUILD_NUMBER
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-ui.yml
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
@@ -105,7 +106,7 @@ pipeline {
                         git status
                         git push https://$GIT_USER:$GIT_PASS@github.com/sahooosunil/todoapp.git
                         cd ..
-                        rm -r temp1
+                        rm -r temp2
                         '''
                     }  
                 }
