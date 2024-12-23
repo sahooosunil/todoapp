@@ -5,6 +5,7 @@ pipeline {
         DOCKER_IMAGE_UI = 'sunilsahu0123/todoui'
         DOCKER_CREDENTIALS = 'docker-hub-credential'
         SONARQUBE_ENV = 'SonarQube'
+        DOCKER_VOLUME = '/var/lib/jenkins/workspace'
     }
     stages {
         stage('Checkout') {
@@ -12,6 +13,7 @@ pipeline {
                 docker { 
                     image 'maven:3.9.5-eclipse-temurin-17'
                     args '-u root'
+                    args "-v ${env.DOCKER_VOLUME}:${env.DOCKER_VOLUME}"
                  }
             }
             steps { // Added steps block
@@ -55,6 +57,7 @@ pipeline {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
                     args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+                    args "-v ${env.DOCKER_VOLUME}:${env.DOCKER_VOLUME}"
                 }
             }
             steps {
@@ -80,7 +83,10 @@ pipeline {
         }
         stage('Deployment') {
             agent {
-                docker { image 'maven:3.9.5-eclipse-temurin-17' }
+                docker { 
+                    image 'maven:3.9.5-eclipse-temurin-17' 
+                    args "-v ${env.DOCKER_VOLUME}:${env.DOCKER_VOLUME}"
+                }
             }
             steps {
                 script {
