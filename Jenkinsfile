@@ -89,6 +89,8 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
+                        mkdir temp
+                        cd temp
                         git clone https://github.com/sahooosunil/todoapp.git
                         cd todoapp
                         git checkout main
