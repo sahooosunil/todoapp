@@ -11,7 +11,7 @@ pipeline {
             agent {
                 docker { 
                     image 'maven:3.9.5-eclipse-temurin-17'
-                    args '-u jenkins'
+                    args '-u root'
                  }
             }
             steps { // Added steps block
@@ -84,6 +84,7 @@ pipeline {
             agent {
                 docker { 
                     image 'maven:3.9.5-eclipse-temurin-17' 
+                    args '-u root'
                 }
             }
             steps {
