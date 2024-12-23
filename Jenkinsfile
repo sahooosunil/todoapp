@@ -94,6 +94,7 @@ pipeline {
                         whoami
                         pwd
                         ls -la
+                        sudo su - jenkins
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1\"$BUILD_NUMBER\"/' ./k8s/deployment-ui.yml
