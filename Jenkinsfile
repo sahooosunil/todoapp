@@ -81,6 +81,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
                         echo $BUILD_NUMBER
+                        git checkout main
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-ui.yml
                         sed -i 's/\\(image:.*:\\)[0-9]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
@@ -89,7 +90,7 @@ pipeline {
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
                         git remote -v
-                        git push origin HEAD:main
+                        git push https://${GIT_PASS}@github.com/sahooosunil/todoapp
                         '''
                     }  
                 }   
