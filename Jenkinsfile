@@ -51,7 +51,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
-                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+                    args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
                 }
             }
             steps {
