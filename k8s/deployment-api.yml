@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: todoapi
-        image: sunilsahu0123/todoapi: ${BUILD_NUMBER}latest
+        image: sunilsahu0123/todoapi:22
         ports:
         - containerPort: 8080
