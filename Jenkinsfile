@@ -11,6 +11,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108'
                 }
             }
             steps { 
@@ -21,6 +22,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108'
                 }
             }
             steps {
@@ -35,6 +37,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108'
                 }
             }
             steps {
@@ -82,8 +85,8 @@ pipeline {
                         echo $BUILD_NUMBER
                         git checkout main
                         BUILD_NUMBER=${BUILD_NUMBER}
-                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-ui.yml
-                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-api.yml
+                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-ui.yml
+                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
