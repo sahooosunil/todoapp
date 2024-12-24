@@ -21,6 +21,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108'
                 }
             }
             steps {
