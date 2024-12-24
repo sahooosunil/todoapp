@@ -80,10 +80,10 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
                         echo $BUILD_NUMBER
-                        export VERSION = $BUILD_NUMBER
                         git checkout main
-                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 ${VERSION}/' ./k8s/deployment-ui.yml
-                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 ${VERSION}/' ./k8s/deployment-api.yml
+                        BUILD_NUMBER=${BUILD_NUMBER}
+                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-ui.yml
+                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
