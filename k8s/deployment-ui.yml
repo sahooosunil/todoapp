@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: todoui
-        image: sunilsahu0123/todoui: $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER
+        image: sunilsahu0123/todoui: $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER $BUILD_NUMBER
         ports:
         - containerPort: 3000
