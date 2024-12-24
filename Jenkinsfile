@@ -11,7 +11,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
-                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
                 }
             }
             steps { 
@@ -22,7 +22,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
-                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
                 }
             }
             steps {
@@ -37,7 +37,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
-                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock'
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
                 }
             }
             steps {
@@ -74,19 +74,15 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
-                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock'
-                    
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
                 }
             }
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
-                        echo $BUILD_NUMBER
-                        git checkout main
-                        BUILD_NUMBER=${BUILD_NUMBER}
-                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-ui.yml
-                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-api.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-ui.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
@@ -96,7 +92,7 @@ pipeline {
                         git push https://${GIT_PASS}@github.com/sahooosunil/todoapp HEAD:main
                         '''
                     }  
-                }   
+                }
             }
         }
     }
@@ -108,4 +104,3 @@ pipeline {
             echo 'Pipeline failed. Check logs for details.'
         }
     }
-}
