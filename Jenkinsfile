@@ -83,8 +83,8 @@ pipeline {
                         sh '''
                         echo $BUILD_NUMBER
                         git checkout main
-                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-ui.yml
-                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-api.yml
+                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-ui.yml
+                        sed -i 's/\\(image:.*:\\)[0-9 a-z A-Z]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
