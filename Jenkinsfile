@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-            
-        }
-    }
+    agent none
     environment {
         DOCKER_IMAGE = 'sunilsahu0123/todoapi'
         DOCKER_IMAGE_UI = 'sunilsahu0123/todoui'
@@ -24,6 +18,11 @@ pipeline {
             }
         }
         stage('Maven Build and Test') {
+            agent {
+                docker {
+                    image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                }
+            }
             steps {
                 script {
                     dir('todoapi') {
@@ -33,6 +32,11 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
+            agent {
+                docker {
+                    image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                }
+            }
             steps {
                 script {
                     dir('todoapi') {
@@ -44,6 +48,12 @@ pipeline {
             }
         }
         stage('Docker Build and Push') {
+            agent {
+                docker {
+                    image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user 108 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+                }
+            }
             steps {
                 script {
                     dir('todoapi') {
@@ -58,6 +68,12 @@ pipeline {
             }
         }
         stage('Deployment') {
+            agent {
+                docker {
+                    image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    
+                }
+            }
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
