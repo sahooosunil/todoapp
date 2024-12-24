@@ -74,6 +74,7 @@ pipeline {
             agent {
                 docker {
                     image 'sunilsahu0123/java-maven-node-docker-agent-image:latest'
+                    args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {
@@ -90,7 +91,7 @@ pipeline {
                         git commit -m 'Updated the deployment-ui.yml deployment-api.yml | Jenkins Pipeline'
                         git status
                         git remote -v
-                        git push https://${GIT_PASS}@github.com/sahooosunil/todoapp
+                        git push
                         '''
                     }  
                 }   
