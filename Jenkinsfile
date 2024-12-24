@@ -81,8 +81,9 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                         sh '''
-                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-ui.yml
-                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1 $BUILD_NUMBER/' ./k8s/deployment-api.yml
+                        echo $BUILD_NUMBER
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-ui.yml
+                        sed -i 's/\\(image:.*:\\)[0-9]*/\\1 ${BUILD_NUMBER}/' ./k8s/deployment-api.yml
                         cat ./k8s/deployment-ui.yml
                         cat ./k8s/deployment-api.yml
                         git add ./k8s/deployment-ui.yml ./k8s/deployment-api.yml
